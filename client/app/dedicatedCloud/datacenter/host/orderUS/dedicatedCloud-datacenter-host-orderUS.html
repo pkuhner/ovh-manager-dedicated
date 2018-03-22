@@ -7,6 +7,10 @@
     <div data-ovh-alert></div>
     <p data-i18n-static="dedicatedCloud_host_order_info"></p>
     <p data-i18n-static="dedicatedCloud_host_order_select"></p>
+    <div class="oui-message oui-message_info mb-4" role="alert" data-ng-if="$ctrl.user.isEnterprise">
+        <i class="oui-icon oui-icon-info_circle oui-icon_bicolor" aria-hidden="true"></i>
+        <p class="oui-message__body" data-i18n-static="dedicatedCloud_host_order_enterprise"></p>
+    </div>
     <oui-datagrid data-rows-loader="$ctrl.fetchDatagridOffers()">
         <oui-column data-title=":: tr('dedicatedCloud_host_order_host')">
             <oui-radio data-text="{{ $row.productName }}"

@@ -1,8 +1,9 @@
 angular.module("App").controller("DedicatedCloudDatacentersDatastoreOrderUSCtrl", class DedicatedCloudDatacentersDatastoreOrderUSCtrl {
 
-    constructor ($scope, $state, OvhHttp, User, serviceName, datacenterId) {
+    constructor ($scope, $state, $q, OvhHttp, User, serviceName, datacenterId) {
         this.$scope = $scope;
         this.$state = $state;
+        this.$q = $q;
         this.OvhHttp = OvhHttp;
         this.User = User;
         this.serviceName = serviceName;
@@ -75,8 +76,12 @@ angular.module("App").controller("DedicatedCloudDatacentersDatastoreOrderUSCtrl"
 
     $onInit () {
         this.loading = true;
-        return this.User.getUrlOf("express_order").then((url) => {
+        return this.$q.all({
+            url: this.User.getUrlOf("express_order"),
+            user: this.User.getUser()
+        }).then(({ url, user }) => {
             this.expressOrderUrl = url;
+            this.user = user;
         }).catch((err) => {
             this.$scope.setMessage(this.$scope.tr("dedicatedCloud_tab_datastores_loading_error"), {
                 message: err.message || err,
