@@ -50,6 +50,7 @@ angular.module("App").controller("FtpBackupCtrl", ($scope, $http, Server, Pollin
 
     $scope.loadFtpBackupTable = function (elementsByPage, elementsToSkip) {
         $scope.loadingTable = true;
+
         $scope.cancelIpBackupCurrentEdit();
 
         Server.getFtpBackupIp($stateParams.productId, elementsByPage, elementsToSkip)
@@ -68,10 +69,23 @@ angular.module("App").controller("FtpBackupCtrl", ($scope, $http, Server, Pollin
             });
     };
 
-    // $scope.$on('server.ftpBackup.access.reload', function() {
-    //     $scope.doReloadAccess = false;
-    //     $scope.$broadcast('paginationServerSide.reload', 'backupTable');
-    // });
+    $scope.loadDatagridTasks = ({ offset, pageSize }) => Server
+        .getFtpBackupIp($stateParams.productId, pageSize, offset - 1)
+        .then((result) => ({
+            data: _.get(result, "list.results"),
+            meta: {
+                totalCount: result.count
+            }
+        })).catch((err) => {
+            if (err.code !== 404) {
+                Alerter.alertFromSWS($scope.tr("server_configuration_ftpbackup_table_fail"), err, alert);
+            }
+        });
+
+    $scope.$on("server.ftpBackup.access.reload", () => {
+        $scope.doReloadAccess = false;
+        $scope.$broadcast("paginationServerSide.reload", "backupTable");
+    });
 
     $scope.$on("server.ftpBackup.access.reload", () => {
         $scope.doReloadAccess = false;

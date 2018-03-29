@@ -49,6 +49,60 @@
                         </dd>
                     </dl>
                 </div>
+
+                <oui-datagrid data-rows-loader="loadDatagridTasks($config)">
+                    <oui-column data-title=":: tr('server_configuration_ftpbackup_table_ip')">
+                        <span data-ng-bind="$row.ipBlock"></span>
+                    </oui-column>
+                    <oui-column data-title=":: tr('server_configuration_ftpbackup_table_cifs')">
+                        <span class="fa"
+                              aria-hidden="true"
+                              data-ng-class="{
+                                  'fa-check': $row.cifs == true,
+                                  'fa-ban': $row.cifs == false
+                              }">
+                        </span>
+                    </oui-column>
+                    <oui-column data-title=":: tr('server_configuration_ftpbackup_table_ftp')">
+                        <span class="fa"
+                              aria-hidden="true"
+                              data-ng-class="{
+                                  'fa-check': $row.ftp == true,
+                                  'fa-ban': $row.ftp == false
+                              }">
+                        </span>
+                    </oui-column>
+                    <oui-column data-title=":: tr('server_configuration_ftpbackup_table_nfs')">
+                        <span class="fa"
+                              aria-hidden="true"
+                              data-ng-class="{
+                                  'fa-check': $row.nfs == true,
+                                  'fa-ban': $row.nfs == false
+                              }">
+                        </span>
+                    </oui-column>
+                    <oui-column data-title=":: tr('server_configuration_ftpbackup_table_status')">
+                        <span class="label label-success"
+                              data-ng-if="$row.isApplied"
+                              data-i18n-static="server_configuration_ftpbackup_table_ip_enable">
+                        </span>
+                        <span class="label label-danger"
+                              data-ng-if="!$row.isApplied"
+                              data-i18n-static="server_configuration_ftpbackup_table_ip_disable">
+                        </span>
+                    </oui-column>
+
+                    <oui-action-menu data-align="end"
+                                     data-compact>
+                        <oui-action-menu-item data-text="{{:: tr('server_configuration_ftpbackup_table_ip_edit') }}"
+                                              data-ng-click="setAction('ftp-backup/access/edit/dedicated-server-ftp-backup-access-edit', $row)">
+                        </oui-action-menu-item>
+                        <oui-action-menu-item data-text="{{:: tr('server_configuration_ftpbackup_table_ip_delete') }}"
+                                              data-ng-click="setAction('ftp-backup/access/delete/dedicated-server-ftp-backup-access-delete', $row)">
+                        </oui-action-menu-item>
+                    </oui-action-menu>
+                </oui-datagrid>
+
                 <table class="table table-hover">
                     <thead>
                         <tr>

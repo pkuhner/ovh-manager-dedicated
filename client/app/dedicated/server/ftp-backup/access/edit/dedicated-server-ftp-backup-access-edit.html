@@ -1,0 +1,24 @@
+<div data-ng-controller="DedicatedServerFtpBackupEditController as $ctrl">
+
+    <div data-wizard
+         data-wizard-on-cancel="resetAction"
+         data-wizard-on-finish="deleteAccessFtpBackup"
+         data-wizard-title="tr('server_configuration_ftpbackup_access_delete')">
+
+        <div data-wizard-step
+             data-wizard-step-valid="!$ctrl.isLoading">
+
+            <div class="text-center"
+                 data-ng-if="$ctrl.isLoading">
+                <oui-spinner ></oui-spinner>
+            </div>
+
+            <div data-ng-if="!$ctrl.isLoading"
+                 data-ng-bind-html="tr('server_configuration_ftpbackup_access_delete_question', [access])">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
